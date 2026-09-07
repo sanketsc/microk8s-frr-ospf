@@ -13,8 +13,7 @@ spec:
       labels:
         app: router-1
       annotations:
-        # Pins the IP for THIS pod on the ospf-link network — removes
-        # the host-local IPAM race condition entirely.
+        # Pins the IP for THIS pod on the ospf-link network
         k8s.v1.cni.cncf.io/networks: '[{"name": "ospf-link", "interface": "net1", "ips": ["10.10.10.2/24"]}]'
     spec:
       containers:
