@@ -61,6 +61,7 @@ The current POC contains two FRRouting routers connected through a dedicated Lin
 
 ## Verify OSPF
 
+```text
 $ microk8s kubectl exec -it deploy/router-1 -- vtysh -c "show ip ospf interface net1" 
 % Can't open configuration file /etc/frr/vtysh.conf due to 'No such file or directory'.
 net1 is up
@@ -75,4 +76,5 @@ net1 is up
   Timer intervals configured, Hello 10s, Dead 40s, Wait 40s, Retransmit 5
     Hello due in 8.113s
   Neighbor Count is 1, Adjacent neighbor count is 1
+```
 
