@@ -1,0 +1,23 @@
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+  name: ospf-link
+  namespace: default
+spec:
+  # NOTE: "name" is required by the CNI spec — it was missing before.
+  # IPAM type is "static" instead of "host-local": with host-local + a
+  # range, whichever pod's CNI ADD call happens first grabs .2, so the
+  # router-1/router-2 -> IP mapping was never guaranteed. "static" lets
+  # each pod pin its own IP via the k8s.v1.cni.cncf.io/networks
+  # annotation on the pod spec (see the Deployments).
+  config: '{
+    "cniVersion": "0.3.1",
+    "name": "ospf-link",
+    "type": "bridge",
+    "bridge": "router-br0",
+    "isGateway": false,
+    "isDefaultGateway": false,
+    "ipam": {
+      "type": "static"
+    }
+  }'
