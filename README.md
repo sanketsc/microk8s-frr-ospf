@@ -58,10 +58,18 @@ The current POC contains two FRRouting routers connected through a dedicated Lin
 ```
 ---
 
-## Verify OSPF
+## OSPF Verification
 
+Use the following commands to check the OSPF interface status and neighbor relationships.
+
+### 1. OSPF Interface Status
+
+```bash
+microk8s kubectl exec -it deploy/router-1 -- vtysh -c "show ip ospf interface net1"
+```
+
+**Output:**
 ```text
-$ microk8s kubectl exec -it deploy/router-1 -- vtysh -c "show ip ospf interface net1" 
 % Can't open configuration file /etc/frr/vtysh.conf due to 'No such file or directory'.
 net1 is up
   ifindex 3, MTU 1500 bytes, BW 10000 Mbit <UP,BROADCAST,RUNNING,MULTICAST>
@@ -76,4 +84,20 @@ net1 is up
     Hello due in 8.113s
   Neighbor Count is 1, Adjacent neighbor count is 1
 ```
+
+### 2. OSPF Neighbor Verification
+
+```bash
+microk8s kubectl exec -it deploy/router-1 -- vtysh -c "show ip ospf neighbor"
+```
+
+**Output:**
+```text
+% Can't open configuration file /etc/frr/vtysh.conf due to 'No such file or directory'.
+
+Neighbor ID     Pri State           Up Time         Dead Time Address         Interface                        RXmtL RqstL DBsmL
+2.2.2.2           1 Full/DR         20.012s           30.482s 10.10.10.3      net1:10.10.10.2                      0     0     0
+```
+
+
 
